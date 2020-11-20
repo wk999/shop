@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../res/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../res/layui/css/layui.css">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+<body>
+
+<div th:replace="~{comment/comment.html::top}"></div>
+
+<div class="header">
+    <div class="headerLayout w1200">
+        <div class="headerCon">
+            <h1 class="mallLogo">
+                <a href="#" title="母婴商城">
+                    <img src="../res/static/img/logo.png">
+                </a>
+            </h1>
+            <div class="mallSearch">
+                <form action="" class="layui-form" novalidate>
+                    <input type="text" name="title" required lay-verify="required" autocomplete="off"
+                           class="layui-input" placeholder="请输入需要的商品">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">
+                        <i class="layui-icon layui-icon-search"></i>
+                    </button>
+                    <input type="hidden" name="" value="">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="content content-nav-base commodity-content">
+
+    <div th:replace="~{comment/comment.html::bar(active='index')}"></div>
+
+    <div class="commod-cont-wrap">
+        <div class="commod-cont w1200 layui-clear">
+            <div class="left-nav">
+                <div class="title">所有分类</div>
+                <div class="list-box">
+                    <dl>
+                        <dt>奶粉辅食</dt>
+                        <dd><a href="javascript:;">进口奶粉</a></dd>
+                        <dd><a href="javascript:;">宝宝辅食</a></dd>
+                        <dd><a href="javascript:;">营养品</a></dd>
+                    </dl>
+                    <dl>
+                        <dt>儿童用品</dt>
+                        <dd><a href="javascript:;">纸尿裤</a></dd>
+                        <dd><a href="javascript:;">婴儿湿巾</a></dd>
+                        <dd><a href="javascript:;">婴儿车</a></dd>
+                        <dd><a href="javascript:;">婴儿床</a></dd>
+                        <dd><a href="javascript:;">儿童安全座椅</a></dd>
+                    </dl>
+                    <dl>
+                        <dt>儿童早教</dt>
+                        <dd><a href="javascript:;">儿童玩具</a></dd>
+                        <dd><a href="javascript:;">早教书籍</a></dd>
+                        <dd><a href="javascript:;">孕产育儿书</a></dd>
+                    </dl>
+                    <dl>
+                        <dt>儿童服饰</dt>
+                        <dd><a href="javascript:;">童装</a></dd>
+                        <dd><a href="javascript:;">童鞋</a></dd>
+                        <dd><a href="javascript:;">宝宝配饰</a></dd>
+                    </dl>
+                    <dl>
+                        <dt>孕妈专区</dt>
+                        <dd><a href="javascript:;">孕妇装</a></dd>
+                        <dd><a href="javascript:;">孕妇护肤</a></dd>
+                        <dd><a href="javascript:;">孕妇用品</a></dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="right-cont-wrap">
+                <div class="right-cont">
+                    <div class="sort layui-clear">
+                        <a class="active" href="javascript:;" event='volume'>销量</a>
+                        <a href="javascript:;" event='price'>价格</a>
+                        <a href="javascript:;" event='newprod'>新品</a>
+                        <a href="javascript:;" event='collection'>收藏</a>
+                    </div>
+                    <div class="prod-number">
+                        <span th:text="'总共：'+${ps.getTotalCount()}+'个商品'"></span>
+                    </div>
+
+                    <div style="width: 1000px; height: 1350px;border: red solid 1px;float: left">
+                     <span th:each="sell:${ps.getList()}" class="item" style="float: left">
+                        <div class="cont-list layui-clear" id="list-cont">
+                            <div class="item">
+                                <div class="img">
+                                    <a th:href="@{'/info?id='+${sell.id}}"><img
+                                            th:src="@{'../upload/image/'+${sell.getPhoto()}}"
+                                            style="width: 280px; height: 300px;"></a>
+                                </div>
+                                <div class="text">
+                                    <p class="title" th:text="'商品名:'+${sell.name}"></p>
+                                    <p class="price">
+                                        <span class="pri" th:text="'￥'+${sell.price}"></span>
+                                        <span class="nub">1222付款</span>
+                                    </p>
+                                </div>
+                            </div>
+                       </div>
+                     </span>
+                    </div>
+
+                    <div style="float: left;">
+                        <nav>
+                            <ul class="pagination">
+                                <!--上一页-->
+                                <li style="margin-left:200px;" th:class="${ps.currentPage eq 1} ? 'disabled' : ''">
+                                    <a th:href="@{'/commopage?c='+${(ps.currentPage)-1}}" aria-label="Previous"
+                                       th:text="'&laquo;'">
+                                    </a>
+                                </li>
+                                <!--中间页-->
+                                <li th:each="m:${#numbers.sequence(1,ps.totalPage)}">
+                                    <a th:href="@{'/commopage?c='+${m}}" th:text="${m}"
+                                       th:if="${m ne ps.currentPage}"></a>
+                                    <a th:href="@{'/commopage?c='+${m}}" th:text="${m}" th:if="${m eq ps.currentPage}"
+                                       th:style="'font-weight:bold;background: #6faed9;'"></a>
+                                </li>
+                                <!--下一页-->
+                                <li th:class="${ps.currentPage ge ps.totalPage}? 'disabled':''">
+                                    <a th:href="@{'/commopage?c='+${(ps.currentPage)+1}}" aria-label="Next"
+                                       th:text="'&raquo;'">
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+</body>
+</html>

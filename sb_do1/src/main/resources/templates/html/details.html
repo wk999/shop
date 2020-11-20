@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../res/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../res/layui/css/layui.css">
+    <script type="text/javascript" src="../res/layui/layui.js"></script>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+
+    <script type="text/javascript" charset="utf-8" th:src="@{ueditor.config.js}"></script>
+    <script type="text/javascript" charset="utf-8" th:src="@{ueditor.all.js}"></script>
+    <!--建议手动加在语言，避免在ie下有时因为加载语言失败导致编辑器加载失败-->
+    <!--这里加载的语言文件会覆盖你在配置项目里添加的语言类型，比如你在配置项目里配置的是英文，这里加载的中文，那最后就是中文-->
+    <script type="text/javascript" charset="utf-8" th:src="@{lang/zh-cn/zh-cn.js}"></script>
+
+    <!--<style type="text/css">-->
+    <!--div{-->
+    <!--width:60%;-->
+    <!--}-->
+    <!--</style>-->
+
+    <script type="text/javascript">
+        var editor = UE.getEditor('container');
+
+        function postDate() {
+
+        }
+    </script>
+
+</head>
+<body>
+
+<div th:replace="~{comment/comment.html::top}"></div>
+
+<div class="content content-nav-base datails-content">
+    <div class="data-cont-wrap w1200">
+        <div class="crumb">
+            <a href="javascript:;">首页</a>
+            <span>></span>
+            <a href="javascript:;">所有商品</a>
+            <span>></span>
+            <a href="javascript:;" th:text="${sell.name}+'详情'"></a>
+        </div>
+        <div class="product-intro layui-clear">
+            <div class="preview-wrap">
+                <img th:src="@{'../upload/image/'+${sell.photo}}" style="width: 400px;height: 420px">
+            </div>
+            <div class="itemInfo-wrap">
+                <div class="itemInfo">
+                    <div class="title">
+                        <h4 th:text="'商品名：'+${sell.name}"></h4>
+                        <span><i class="layui-icon layui-icon-rate-solid"></i>收藏</span>
+                    </div>
+                    <div class="summary">
+                        <!--<p class="reference"><span>参考价</span> <del>￥280.00</del></p>-->
+                        <p class="activity"><span>活动价</span><strong class="price"><i
+                                th:text="'￥：'+${sell.price}"></i></strong></p>
+                        <p class="address-box"><span>送&nbsp;&nbsp;&nbsp;&nbsp;至</span><strong class="address">江西&nbsp;&nbsp;南昌&nbsp;&nbsp;东湖区</strong>
+                        </p>
+                    </div>
+                    <div class="choose-attrs">
+                        <div class="color layui-clear"><span class="title">颜&nbsp;&nbsp;&nbsp;&nbsp;色</span>
+                            <div class="color-cont"><span class="btn">白色</span> <span class="btn active">粉丝</span></div>
+                        </div>
+                        <div class="number layui-clear"><span class="title">数&nbsp;&nbsp;&nbsp;&nbsp;量</span>
+                            <div class="number-cont"><span class="cut btn">-</span><input
+                                    onkeyup="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                    onafterpaste="if(this.value.length==1){this.value=this.value.replace(/[^1-9]/g,'')}else{this.value=this.value.replace(/\D/g,'')}"
+                                    maxlength="4" type="" name="" value="1"><span class="add btn">+</span></div>
+                        </div>
+                    </div>
+                    <div class="choose-btns">
+                        <button class="layui-btn layui-btn-primary purchase-btn">立刻购买</button>
+                        <button class="layui-btn  layui-btn-danger car-btn"><i
+                                class="layui-icon layui-icon-cart-simple"></i>加入购物车
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-clear">
+            <div class="aside">
+                <h4>热销推荐</h4>
+                <div class="item-list" th:each="s:${list}" th:if="${list.size() le 9}">
+                    <div class="item">
+                        <img th:src="@{'../upload/image/'+${s.photo}}" style="width: 320px">
+                        <p><span th:text="${s.name}"></span><span class="pric" th:text="'优惠价￥：'+${s.tprice}"></span></p>
+                    </div>
+                </div>
+                <div class="item-list" th:each="s:${list}" th:if="${list.size() ge 10}">
+                    <div class="item">
+                        <img th:src="@{'../upload/image/'+${s.photo}}">
+                        <p><span th:text="${s.name}"></span><span class="pric" th:text="'优惠价￥：'+${s.tprice}"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="detail">
+                <h4>亲，留下您的评论：</h4>
+                <div class="item" style="width: 700px">
+                    <form th:action="@{'/comment?id='+${sell.id}}" method="post">
+                        <textarea id="container" name="content" type="text/plain">这里写你的初始化内容</textarea>
+                        <button id="btn" onclick="postDate()" class="layui-btn  layui-btn-danger car-btn"
+                                style="float: right">提交
+                        </button>
+                    </form>
+                </div>
+                <h4>全部评论：</h4>
+                <div style="margin-top: 50px" th:each="m:${ms}">
+                    <input type="text" style="width: 40px;height: 20px;" value="武康" th:utext="${m.comment}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    layui.config({
+        base: '../res/static/js/util/' //你存放新模块的目录，注意，不是layui的模块目录
+    }).use(['mm', 'jquery'], function () {
+        var mm = layui.mm, $ = layui.$;
+        var cur = $('.number-cont input').val();
+        $('.number-cont .btn').on('click', function () {
+            if ($(this).hasClass('add')) {
+                cur++;
+
+            } else {
+                if (cur > 1) {
+                    cur--;
+                }
+            }
+            $('.number-cont input').val(cur)
+        })
+
+    });
+</script>
+
+
+</body>
+</html>

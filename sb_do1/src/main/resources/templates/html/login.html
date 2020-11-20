@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="res/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="res/layui/css/layui.css">
+    <script type="text/javascript" src="res/layui/layui.all.js"></script>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+
+    <!-- 触发JS刷新  切换图片-->
+    <script type="text/javascript">
+        function changeImg() {
+            var img = document.getElementById("verify_code_img");
+            img.src = "/getImg?date=" + new Date();
+        }
+
+    </script>
+
+</head>
+<body>
+
+<div class="content content-nav-base  login-content">
+    <div class="login-bg">
+        <div class="login-cont w1200">
+            <div class="form-box">
+
+                <form th:action="@{/shiro}" method="post">
+                    <legend>用户登录/<a href="">注册</a></legend>
+                    <p th:text="${msg}" style="text-align: center;color: red;font-size: 20px"></p>
+                    <div class="layui-form-item">
+                        <div class="layui-inline veri-code">
+                            <div class="layui-input-inline">
+                                <input type="text" name="username" placeholder="请输入用户名" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline veri-code">
+                            <div class="layui-input-inline">
+                                <input type="password" name="pwd" placeholder="请输入密码" class="layui-input">
+                                <!--<input type="button" class="layui-btn"  value="验证码" />-->
+                            </div>
+                        </div>
+
+                        <div class="field-wrap" data-field="mobile" style="position:relative;z-index:100;">
+                            <label class="short">验证码：</label>
+                            <span class="field">
+                                <input class="ui-text short" type="text" name="verify_code" maxlength="4">
+                                <span class="error" style="display: inline;"></span>
+                            </span>
+                            <div>
+                                <input type="text" style="height: 10px;border: none">
+                            </div>
+                            <span class="field vcode" data-type="vcode">
+                                 <img width="120" id="verify_code_img" height="32" th:src="@{/getImg}"
+                                      onclick="javascript:changeImg()">
+                                    <a href="#" class="doc-color-link desc"
+                                       onclick="javascript:changeImg()">看不清，换一个？</a>
+                            </span>
+                        </div>
+
+                        <div class="layui-form-item login-btn">
+                            <div class="layui-input-block">
+                                <button class="layui-btn">登录</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    <div class="ng-promise-box">
+        <div class="ng-promise w1200">
+            <p class="text">
+                <a class="icon1" href="javascript:;">7天无理由退换货</a>
+                <a class="icon2" href="javascript:;">满99元全场免邮</a>
+                <a class="icon3" style="margin-right: 0" href="javascript:;">100%品质保证</a>
+            </p>
+        </div>
+    </div>
+    <div class="mod_help w1200">
+        <p>
+            <a href="javascript:;">关于我们</a>
+            <span>|</span>
+            <a href="javascript:;">帮助中心</a>
+            <span>|</span>
+            <a href="javascript:;">售后服务</a>
+            <span>|</span>
+            <a href="javascript:;">母婴资讯</a>
+            <span>|</span>
+            <a href="javascript:;">关于货源</a>
+        </p>
+        <p class="coty">母婴商城版权所有 &copy; 2012-2020</p>
+    </div>
+</div>
+
+</body>
+</html>

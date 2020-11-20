@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>共同部分</title>
+    <link rel="stylesheet" type="text/css" href="../res/static/css/main.css">
+    <link rel="stylesheet" type="text/css" href="../res/layui/css/layui.css">
+    <script type="text/javascript" src="../res/layui/layui.js"></script>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+<body id="list-cont">
+
+<!--设置共同的头部-->
+<div class="site-nav-bg" th:fragment="top">
+    <div class="site-nav w1200">
+        <p class="sn-back-home">
+            <i class="layui-icon layui-icon-home"></i>
+            <a th:href="@{/index}">首页</a>
+        </p>
+        <div class="sn-quick-menu">
+            <div class="login"><a th:href="@{/login}">登录</a></div>
+            <div class="sp-cart"><a th:href="@{/car}">购物车</a><span></span></div>
+        </div>
+    </div>
+</div>
+<!--设置共同的4个按钮bar-->
+<div class="main-nav" th:fragment="bar">
+    <div class="inner-cont0">
+        <div class="inner-cont1 w1200">
+            <div class="inner-cont2">
+                <a th:href="@{/commopage(c=1)}" th:class="${active=='index'?'active':''}">所有商品</a>
+                <a th:href="@{/buytoday}" th:class="${active=='buytoday'?'active':''}">今日团购</a>
+                <a th:href="@{/information}" th:class="${active=='information'?'active':''}">母婴资讯</a>
+                <a th:href="@{/about}" th:class="${active=='about'?'active':''}">关于我们</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
